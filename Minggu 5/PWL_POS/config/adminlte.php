@@ -309,6 +309,11 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+        [
+            'text' => 'Manage Kategori',
+            'url' => 'kategori',
+            'icon' => 'fas fa-list',
+        ],
 
         // Sidebar items:
         [
@@ -319,11 +324,6 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'Manage Kategori',
-            'url' => 'kategori',
-            'icon' => 'fas fa-list',
         ],
         [
             'text' => 'pages',
