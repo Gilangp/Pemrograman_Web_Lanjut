@@ -2,58 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UserDataTable;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(UserDataTable $dataTable)
     {
-        $user = UserModel::all();
-        return view('user.index', ['data'=>$user]);
+        return $dataTable->render('user.index');
     }
 
     // Tambah Data
-    public function tambah()
+    public function create()
     {
-        return view('user.user_tambah');
+        return view('user.create');
     }
 
-    public function tambah_simpan(Request $request)
+    public function createAdd(Request $request)
     {
         UserModel::create([
             'username' => $request->username,
-            'nama' => $request->nama,
+            'nama' => $request->namaUser,
             'password' => Hash::make('$request->password'),
-            'level_id' => $request->level_id
+            'level_id' => $request->idLevel
         ]);
 
         return redirect('/user');
     }
 
     // Edit Data
-    public function ubah($id)
+    public function edit($id)
     {
         $user = UserModel::find($id);
-        return view('user.user_ubah', ['data' => $user]);
+        return view('user.edit', ['data' => $user]);
     }
 
-    public function ubah_simpan($id, Request $request)
+    public function update($id, Request $request)
     {
         $user = UserModel::find($id);
 
         $user->username = $request->username;
-        $user->nama = $request->nama;
+        $user->nama = $request->namaUser;
         $user->password = Hash::make('$request->password');
-        $user->level_id = $request->level_id;
+        $user->level_id = $request->idLevel;
 
         $user->save();
 
         return redirect('/user');
     }
 
-    // Hapus Data v
+    // Hapus Data
     public function hapus($id)
     {
         $user = UserModel::find($id);

@@ -1,30 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Kategori</title>
-</head>
-<body>
-    <h1>Data Kategori</h1>
-    <a href="/kategori/tambah">+ Tambah Kategori</a>
-    <table border="1" cellpadding="2" cellspacing="0">
-        <tr>
-            <th>ID</th>
-            <th>Kode Kategori</th>
-            <th>Nama Kategori</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach ($data as $d)
-        <tr>
-            <td>{{ $d->kategori_id }}</td>
-            <td>{{ $d->kategori_kode }}</td>
-            <td>{{ $d->kategori_nama }}</td>
-            <td><a href="/kategori/ubah/{{ $d->kategori_id }}">Ubah</a> |
-                <a href="/kategori/hapus/{{ $d->kategori_id }}">Hapus</a></td>
-        </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('subtitle', 'Kategori')
+@section('content_header_title', 'Home')
+@section('content_header_subtitle', 'Kategori')
+
+@section('content')
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Manage Kategori</div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <a href="/kategori/create" class="btn btn-primary btn-sm px-3">
+                        <i class="fas fa-plus"></i> Add Kategori
+                    </a>
+                </div>
+                
+                {{ $dataTable->table(['class' => 'table-striped']) }}
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('scripts')
+    {{ $dataTable->scripts() }}
+@endpush

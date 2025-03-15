@@ -5,7 +5,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\BarangController;
-use App\Http\Controllers\KetegoriController;
+use App\Http\Controllers\KategoriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,19 +31,19 @@ Route::put('/level/ubah_simpan/{id}', [LevelController::class, 'ubah_simpan']);
 Route::get('/level/hapus/{id}', [LevelController::class, 'hapus']);
 
 // Kategori
-Route::get('/kategori', [KetegoriController::class, 'index']);
-Route::get('/kategori/tambah', [KetegoriController::class, 'tambah']);
-Route::post('/kategori/tambah_simpan', [KetegoriController::class, 'tambah_simpan']);
-Route::get('/kategori/ubah/{id}', [KetegoriController::class, 'ubah']);
-Route::put('/kategori/ubah_simpan/{id}', [KetegoriController::class, 'ubah_simpan']);
-Route::get('/kategori/hapus/{id}', [KetegoriController::class, 'hapus']);
+Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/kategori/create', [KategoriController::class, 'create']);
+Route::post('/kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit']);
+Route::put('/kategori/update/{id}', [KategoriController::class, 'update']);
+Route::get('/kategori/hapus/{id}', [KategoriController::class, 'hapus']);
 
 // User
 Route::get('/user', [UserController::class, 'index']);
-Route::get('/user/tambah', [UserController::class, 'tambah']);
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
+Route::get('/user/create', [UserController::class, 'create']);
+Route::post('/user', [UserController::class, 'createAdd']);
+Route::get('/user/edit/{id}', [UserController::class, 'edit']);
+Route::put('/user/update/{id}', [UserController::class, 'update']);
 Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 
 // Barang
