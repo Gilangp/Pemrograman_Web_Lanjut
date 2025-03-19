@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\KategoriModel;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\KategoriDataTable;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\RedirectResponse;
 
 class KategoriController extends Controller
 {
@@ -39,12 +41,14 @@ class KategoriController extends Controller
         return view('kategori.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        KategoriModel::create([
-            'kategori_kode' => $request->kodeKategori,
-            'kategori_nama' => $request->namaKategori,
+        $validated = $request->validate([
+            'kategori_kode' => 'bail|required|string|max:10|unique:m_kategori,kategori_kode',
+            'kategori_nama' => 'required|string|max:50',
         ]);
+        KategoriModel::create($validated);
+
         return redirect('/kategori');
     }
 
