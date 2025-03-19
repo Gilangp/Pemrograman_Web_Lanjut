@@ -11,13 +11,11 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <a href="/kategori/create" class="btn btn-primary btn-sm px-3">
-                        <i class="fas fa-plus"></i> Add Kategori
+                        <i class="fas fa-plus"></i> Add
                     </a>
                 </div>
-                
-                <div class="table-responsive">
-                    {{ $dataTable->table(['class' => 'table-striped']) }}
-                </div>
+
+                {{ $dataTable->table(['class' => 'table-striped']) }}
             </div>
         </div>
     </div>
