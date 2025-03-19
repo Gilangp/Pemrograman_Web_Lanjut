@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserPostRequest;
 
 class UserController extends Controller
 {
@@ -19,15 +20,13 @@ class UserController extends Controller
         return view('user_tambah');
     }
 
-    public function tambah_simpan(Request $request)
+    public function store(UserPostRequest $request)
     {
-        UserModel::create([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'password' => Hash::make($request->password),
-            'level_id' => $request->level_id
-        ]);
+        $validated = $request->validated();
 
+        $validated = $request->safe()->only(['level_id', 'username', 'nama', 'password']);
+        $validated = $request->safe()->except(['level_id', 'username', 'nama', 'password']);
+        
         return redirect('/user');
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LevelPostRequest;
 
 class LevelController extends Controller
 {
@@ -20,5 +21,15 @@ class LevelController extends Controller
 
         $data = DB::select('select * from m_level');
         return view('level', ['data' => $data]);
+    }
+
+    public function store(LevelPostRequest $request)
+    {
+        $validated = $request->validated();
+
+        $validated = $request->safe()->only(['level_kode', 'level_nama']);
+        $validated = $request->safe()->except(['level_kode', 'level_nama']);
+
+        return redirect('/level');
     }
 }
