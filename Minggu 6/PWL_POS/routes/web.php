@@ -20,6 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// form
+Route::get('/form-user', function () {
+    return view('formUser');
+});
+Route::get('/form-level', function () {
+    return view('formLevel');
+});
+
 Route::get('/level', [LevelController::class, 'index']);
 
 // route kategori
