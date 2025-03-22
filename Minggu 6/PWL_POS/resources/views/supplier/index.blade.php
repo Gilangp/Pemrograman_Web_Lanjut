@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah kategori</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah Supplier</a>
             </div>
         </div>
         <div class="card-body">
@@ -20,23 +20,24 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter :</label>
                         <div class="col-3">
-                            <select class="form-control" id="kategori_kode" name="kategori_kode">
+                            <select class="form-control" id="supplier_kode" name="supplier_kode">
                                 <option value="">- Semua -</option>
-                                @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->kategori_kode }}">{{ $kategori->kategori_kode }}</option>
+                                @foreach ($suppliers as $supplier)
+                                    <option value="{{ $supplier->supplier_kode }}">{{ $supplier->supplier_kode }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Kode Kategori</small>
+                            <small class="form-text text-muted">Kode Supplier</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Kode Kategori</th>
-                        <th>Nama Kategori</th>
+                        <th>Kode Supplier</th>
+                        <th>Nama Supplier</th>
+                        <th>Alamat</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -51,13 +52,13 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataLevel = $('#table_kategori').DataTable({
+            var dataSupplier = $('#table_supplier').DataTable({
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('kategori/list') }}",
+                    url: "{{ url('supplier/list') }}",
                     type: "POST",
                     data: function(d) {
-                        d.kategori_kode = $('#kategori_kode').val();
+                        d.supplier_kode = $('#supplier_kode').val();
                     }
                 },
                 columns: [
@@ -68,12 +69,17 @@
                         searchable: false,
                     },
                     {
-                        data: "kategori_kode",
+                        data: "supplier_kode",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "kategori_nama",
+                        data: "supplier_nama",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "supplier_alamat",
                         orderable: true,
                         searchable: true
                     },
@@ -85,8 +91,9 @@
                     }
                 ]
             });
-            $('#kategori_kode').on('change', function() {
-                dataLevel.ajax.reload();
+
+            $('#supplier_kode').on('change', function() {
+                dataSupplier.ajax.reload();
             });
         });
     </script>

@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah kategori</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah Level</a>
             </div>
         </div>
         <div class="card-body">
@@ -20,23 +20,23 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter :</label>
                         <div class="col-3">
-                            <select class="form-control" id="kategori_kode" name="kategori_kode">
+                            <select class="form-control" id="level_kode" name="level_kode">
                                 <option value="">- Semua -</option>
-                                @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->kategori_kode }}">{{ $kategori->kategori_kode }}</option>
+                                @foreach ($levels as $level)
+                                    <option value="{{ $level->level_kode }}">{{ $level->level_kode }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Kode Kategori</small>
+                            <small class="form-text text-muted">Kode Level</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_level">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Kode Kategori</th>
-                        <th>Nama Kategori</th>
+                        <th>Kode Level</th>
+                        <th>Nama Level</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -51,13 +51,13 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataLevel = $('#table_kategori').DataTable({
+            var dataLevel = $('#table_level').DataTable({
                 serverSide: true,
                 ajax: {
-                    url: "{{ url('kategori/list') }}",
+                    url: "{{ url('level/list') }}",
                     type: "POST",
                     data: function(d) {
-                        d.kategori_kode = $('#kategori_kode').val();
+                        d.level_kode = $('#level_kode').val();
                     }
                 },
                 columns: [
@@ -68,12 +68,12 @@
                         searchable: false,
                     },
                     {
-                        data: "kategori_kode",
+                        data: "level_kode",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "kategori_nama",
+                        data: "level_nama",
                         orderable: true,
                         searchable: true
                     },
@@ -85,7 +85,7 @@
                     }
                 ]
             });
-            $('#kategori_kode').on('change', function() {
+            $('#level_kode').on('change', function() {
                 dataLevel.ajax.reload();
             });
         });

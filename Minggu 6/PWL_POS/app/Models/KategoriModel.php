@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KategoriModel extends Model
 {
+    use HasFactory;
+
     protected $table = 'm_kategori';
     protected $primaryKey = 'kategori_id';
 
@@ -15,6 +17,6 @@ class KategoriModel extends Model
 
     public function barang(): HasMany
     {
-        return $this->hasMany(BarangModel::class, 'barang_id', 'barang_id');
+        return $this->hasMany(BarangModel::class, 'kategori_id', 'kategori_id');
     }
 }
