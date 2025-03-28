@@ -34,7 +34,6 @@ use App\Http\Controllers\SupplierController;
 // Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 
 // JS 5-Prak-2
-Route::get('/', [WelcomeController::class, 'index']);
 
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']);
@@ -117,5 +116,5 @@ Route::post('login', [AuthController::class, 'postLogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
-    
+    Route::get('/', [WelcomeController::class, 'index']);
 });
