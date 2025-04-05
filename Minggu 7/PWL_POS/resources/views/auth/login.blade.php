@@ -55,6 +55,11 @@
                     <!-- /.col -->
                     </div>
                 </form>
+
+                {{-- route ke regristasi --}}
+                <p class="mb-0 mt-3 text-center">
+                    Belum punya akun? <a href="{{ url('register') }}" class="text-center">Daftar di sini</a>
+                </p>
             </div>
         <!-- /.card-body -->
         </div>
@@ -85,7 +90,7 @@
                 $("#form-login").validate({
                     rules: {
                         username: {required: true, minlength: 4, maxlength: 20},
-                        password: {required: true, minlength: 5, maxlength: 20}
+                        password: {required: true, minlength: 6, maxlength: 20}
                     },
                     submitHandler: function(form) { // ketika valid, maka bagian yg akan dijalankan
                         $.ajax({
