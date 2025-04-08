@@ -186,6 +186,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}', [BarangController:: class, 'destroy']);
             Route::get('/import', [BarangController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
+            Route::get('/export_excel', [BarangController::class, 'export_excel']); // expor_excel
         });
 
         Route::group(['prefix' => 'user'], function () {
