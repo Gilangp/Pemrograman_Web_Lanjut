@@ -58,7 +58,7 @@
 
                 {{-- route ke regristasi --}}
                 <p class="mb-0 mt-3 text-center">
-                    Belum punya akun? <a href="{{ url('register') }}" class="text-center">Daftar di sini</a>
+                    Belum punya akun? <a href="{{ url('register') }}" class="text-center">Daftar</a>
                 </p>
             </div>
         <!-- /.card-body -->
