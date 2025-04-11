@@ -1,46 +1,79 @@
-@extends('layouts.template')
-
-@section('content')
-    <div class="card card-outline card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Tambah Kategori</h3>
-            <div class="card-tools"></div>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ url('kategori') }}" class="form-horizontal">
-                @csrf
-                <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">Kode Kategori</label>
-                    <div class="col-11">
-                        <input type="text" class="form-control" id="kategori_kode" name="kategori_kode" value="{{ old('kategori_kode') }}" required>
-                        @error('kategori_kode')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+<form action="{{ url('kategori') }}" method="POST" id="form-tambah">
+    @csrf
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kategori</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Kode Kategori</label>
+                    <input value="" type="text" name="kategori_kode" id="kategori_kode" class="form-control" required>
+                    <small id="error-kategori-kode" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">Nama Kategori</label>
-                    <div class="col-11">
-                        <input type="text" class="form-control" id="kategori_nama" name="kategori_nama" value="{{ old('kategori_nama') }}" required>
-                        @error('kategori_nama')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label>Nama Kategori</label>
+                    <input value="" type="text" name="kategori_nama" id="kategori_nama" class="form-control" required>
+                    <small id="error-kategori-nama" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-1 control-label col-form-label"></label>
-                    <div class="col-11">
-                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-sm btn-default ml-1" href="{{ url('kategori') }}">Kembali</a>
-                    </div>
-                </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
         </div>
     </div>
-@endsection
-
-@push('css')
-@endpush
-
-@push('js')
-@endpush
+</form>
+<script>
+    $(document).ready(function() {
+        $("#form-tambah").validate({
+            rules: {
+                kategori_kode: { required: true, minlength: 3, maxlength: 10 },
+                kategori_nama: { required: true, minlength: 1, maxlength: 100 }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            $('#myModal').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                            dataKategori.ajax.reload();
+                        } else {
+                            $('.error-text').text('');
+                            $.each(response.msgField, function(prefix, val) {
+                                $('#error-' + prefix).text(val[0]);
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+                return false;
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+</script>

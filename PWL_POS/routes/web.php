@@ -43,7 +43,8 @@ Route::group(['prefix' => 'level'], function () {
     Route::get('/{id}', [LevelController::class, 'show']);
     Route::get('/{id}/edit', [LevelController::class, 'edit']);
     Route::put('/{id}', [LevelController::class, 'update']);
-    Route::delete('/{id}', [LevelController:: class, 'destroy']);
+    Route::get('/{id}/delete', [LevelController::class, 'confirm']);
+    Route::delete('/{id}', [LevelController:: class, 'delete']);
 });
 
 Route::group(['prefix' => 'user'], function () {
@@ -54,7 +55,8 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}', [UserController::class, 'show']);
     Route::get('/{id}/edit', [UserController::class, 'edit']);
     Route::put('/{id}', [UserController::class, 'update']);
-    Route::delete('/{id}', [UserController:: class, 'destroy']);
+    Route::get('/{id}/delete', [UserController::class, 'confirm']);
+    Route::delete('/{id}', [UserController:: class, 'delete']);
 });
 
 Route::group(['prefix' => 'kategori'], function () {
@@ -65,18 +67,8 @@ Route::group(['prefix' => 'kategori'], function () {
     Route::get('/{id}', [KetegoriController::class, 'show']);
     Route::get('/{id}/edit', [KetegoriController::class, 'edit']);
     Route::put('/{id}', [KetegoriController::class, 'update']);
-    Route::delete('/{id}', [KetegoriController:: class, 'destroy']);
-});
-
-Route::group(['prefix' => 'supplier'], function () {
-    Route::get('/', [SupplierController::class, 'index']);
-    Route::post('/list', [SupplierController::class, 'list']);
-    Route::get('/create', [SupplierController::class, 'create']);
-    Route::post('/', [SupplierController::class, 'store']);
-    Route::get('/{id}', [SupplierController::class, 'show']);
-    Route::get('/{id}/edit', [SupplierController::class, 'edit']);
-    Route::put('/{id}', [SupplierController::class, 'update']);
-    Route::delete('/{id}', [SupplierController:: class, 'destroy']);
+    Route::get('/{id}/delete', [KetegoriController::class, 'confirm']);
+    Route::delete('/{id}', [KetegoriController:: class, 'delete']);
 });
 
 Route::group(['prefix' => 'barang'], function () {
@@ -87,5 +79,18 @@ Route::group(['prefix' => 'barang'], function () {
     Route::get('/{id}', [BarangController::class, 'show']);
     Route::get('/{id}/edit', [BarangController::class, 'edit']);
     Route::put('/{id}', [BarangController::class, 'update']);
-    Route::delete('/{id}', [BarangController:: class, 'destroy']);
+    Route::get('/{id}/delete', [BarangController::class, 'confirm']);
+    Route::delete('/{id}', [BarangController:: class, 'delete']);
+});
+
+Route::group(['prefix' => 'supplier'], function () {
+    Route::get('/', [SupplierController::class, 'index']);
+    Route::post('/list', [SupplierController::class, 'list']);
+    Route::get('/create', [SupplierController::class, 'create']);
+    Route::post('/', [SupplierController::class, 'store']);
+    Route::get('/{id}', [SupplierController::class, 'show']);
+    Route::get('/{id}/edit', [SupplierController::class, 'edit']);
+    Route::put('/{id}', [SupplierController::class, 'update']);
+    Route::get('/{id}/delete', [SupplierController::class, 'confirm']);
+    Route::delete('/{id}', [SupplierController:: class, 'delete']);
 });

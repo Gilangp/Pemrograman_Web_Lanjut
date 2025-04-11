@@ -13,7 +13,11 @@ class UserModel extends Model
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password'];
+    protected $fillable = ['level_id', 'username', 'nama', 'password', 'photo', 'create_at', 'update_at'];
+
+    protected $hidden = ['password'];
+
+    protected $casts = ['password' => 'hashed'];
 
     public function level(): BelongsTo
     {

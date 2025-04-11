@@ -45,6 +45,13 @@
                     <p>Data Barang</p>
                 </a>
             </li>
+            <li class="nav-header">Data Supplier</li>
+            <li class="nav-item">
+                <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier')? 'active' : '' }} ">
+                    <i class="nav-icon fas fa-truck"></i>
+                    <p>Supplier</p>
+                </a>
+            </li>
             <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
                 <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')? 'active' : '' }} ">
@@ -53,17 +60,22 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : '' }} ">
+                <a href="{{ url('/penjualan') }}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : '' }} ">
                     <i class="nav-icon fas fa-cash-register"></i>
                     <p>Transaksi Penjualan</p>
                 </a>
             </li>
+        </ul>
+    </nav>
+    <!-- Logout -->
+    {{-- <nav class="mt-5">
+        <ul class="nav nav-pills nav-sidebar flex-column">
             <li class="nav-item">
-                <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier')? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-truck"></i>
-                    <p>Data Supplier</p>
+                <a href="/logout" class="nav-link text-danger">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
                 </a>
             </li>
         </ul>
-    </nav>
+    </nav> --}}
 </div>

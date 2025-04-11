@@ -1,64 +1,91 @@
-@extends('layouts.template')
-
-@section('content')
-    <div class="card card-outline card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Tambah Supplier</h3>
-            <div class="card-tools"></div>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ url('supplier') }}" class="form-horizontal">
-                @csrf
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Kode Supplier</label>
-                    <div class="col-10">
-                        <input type="text" class="form-control" id="supplier_kode" name="supplier_kode" value="{{ old('supplier_kode') }}" required>
-                        @error('supplier_kode')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+<form action="{{ url('supplier') }}" method="POST" id="form-tambah">
+    @csrf
+    <div id="modal-master" class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Supplier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Kode Supplier</S></label>
+                    <input value="" type="text" name="supplier_kode" id="supplier_kode" class="form-control" required>
+                    <small id="error-supplier-kode" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Nama Supplier</label>
-                    <div class="col-10">
-                        <input type="text" class="form-control" id="supplier_nama" name="supplier_nama" value="{{ old('supplier_nama') }}" required>
-                        @error('supplier_nama')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label>Nama Supplier</label>
+                    <input value="" type="text" name="supplier_nama" id="supplier_nama" class="form-control" required>
+                    <small id="error-supplier-nama" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Alamat</label>
-                    <div class="col-10">
-                        <textarea class="form-control" id="supplier_alamat" name="supplier_alamat" required>{{ old('supplier_alamat') }}</textarea>
-                        @error('supplier_alamat')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label>Alamat Supplier</label>
+                    <input value="" type="text" name="supplier_alamat" id="supplier_alamat" class="form-control" required>
+                    <small id="error-supplier-alamat" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">No Telepon</label>
-                    <div class="col-10">
-                        <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="{{ old('supplier_telepon') }}" required>
-                        @error('supplier_telepon')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label>Nomer Telepon Supplier</label>
+                    <input value="" type="text" name="supplier_telepon" id="supplier_telepon" class="form-control" required>
+                    <small id="error-supplier-telepon" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label"></label>
-                    <div class="col-10">
-                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-sm btn-default ml-1" href="{{ url('supplier') }}">Kembali</a>
-                    </div>
-                </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
         </div>
     </div>
-@endsection
-
-@push('css')
-@endpush
-
-@push('js')
-@endpush
+</form>
+<script>
+    $(document).ready(function() {
+        $("#form-tambah").validate({
+            rules: {
+                supplier_kode: { required: true, minlength: 2},
+                supplier_nama: { required: true, maxlength: 100 },
+                supplier_alamat: { required: true },
+                supplier_telepon: { required: true, maxlength: 15 }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            $('#myModal').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                            dataSupplier.ajax.reload();
+                        } else {
+                            $('.error-text').text('');
+                            $.each(response.msgField, function(prefix, val) {
+                                $('#error-' + prefix).text(val[0]);
+                            });
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: response.message
+                            });
+                        }
+                    }
+                });
+                return false;
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+    });
+</script>
