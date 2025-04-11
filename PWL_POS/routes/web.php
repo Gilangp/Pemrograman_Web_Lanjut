@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
@@ -25,98 +26,96 @@ use App\Http\Controllers\PenjualanController;
 //     return view('welcome');
 // });
 
-// Route::get('/level', [LevelController::class, 'index']);
-// Route::get('/kategori', [KetegoriController::class, 'index']);
-// Route::get('/user', [UserController::class, 'index']);
-// Route::get('/user/tambah', [UserController::class, 'tambah']);
-// Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
-// Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-// Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
-// Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
+Route::pattern('id', '[0-9]+');
 
-// JS 5-Prak-2
-Route::get('/', [WelcomeController::class, 'index']);
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postLogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-Route::group(['prefix' => 'level'], function () {
-    Route::get('/', [LevelController::class, 'index']);
-    Route::post('/list', [LevelController::class, 'list']);
-    Route::get('/create', [LevelController::class, 'create']);
-    Route::post('/', [LevelController::class, 'store']);
-    Route::get('/{id}', [LevelController::class, 'show']);
-    Route::get('/{id}/edit', [LevelController::class, 'edit']);
-    Route::put('/{id}', [LevelController::class, 'update']);
-    Route::get('/{id}/delete', [LevelController::class, 'confirm']);
-    Route::delete('/{id}', [LevelController:: class, 'delete']);
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [WelcomeController::class, 'index']);
 
-Route::group(['prefix' => 'user'], function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::post('/list', [UserController::class, 'list']);
-    Route::get('/create', [UserController::class, 'create']);
-    Route::post('/', [UserController::class, 'store']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::get('/{id}/edit', [UserController::class, 'edit']);
-    Route::put('/{id}', [UserController::class, 'update']);
-    Route::get('/{id}/delete', [UserController::class, 'confirm']);
-    Route::delete('/{id}', [UserController:: class, 'delete']);
-});
+    Route::group(['prefix' => 'level'], function () {
+        Route::get('/', [LevelController::class, 'index']);
+        Route::post('/list', [LevelController::class, 'list']);
+        Route::get('/create', [LevelController::class, 'create']);
+        Route::post('/', [LevelController::class, 'store']);
+        Route::get('/{id}', [LevelController::class, 'show']);
+        Route::get('/{id}/edit', [LevelController::class, 'edit']);
+        Route::put('/{id}', [LevelController::class, 'update']);
+        Route::get('/{id}/delete', [LevelController::class, 'confirm']);
+        Route::delete('/{id}', [LevelController:: class, 'delete']);
+    });
 
-Route::group(['prefix' => 'kategori'], function () {
-    Route::get('/', [KetegoriController::class, 'index']);
-    Route::post('/list', [KetegoriController::class, 'list']);
-    Route::get('/create', [KetegoriController::class, 'create']);
-    Route::post('/', [KetegoriController::class, 'store']);
-    Route::get('/{id}', [KetegoriController::class, 'show']);
-    Route::get('/{id}/edit', [KetegoriController::class, 'edit']);
-    Route::put('/{id}', [KetegoriController::class, 'update']);
-    Route::get('/{id}/delete', [KetegoriController::class, 'confirm']);
-    Route::delete('/{id}', [KetegoriController:: class, 'delete']);
-});
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::post('/list', [UserController::class, 'list']);
+        Route::get('/create', [UserController::class, 'create']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::get('/{id}/edit', [UserController::class, 'edit']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::get('/{id}/delete', [UserController::class, 'confirm']);
+        Route::delete('/{id}', [UserController:: class, 'delete']);
+    });
 
-Route::group(['prefix' => 'barang'], function () {
-    Route::get('/', [BarangController::class, 'index']);
-    Route::post('/list', [BarangController::class, 'list']);
-    Route::get('/create', [BarangController::class, 'create']);
-    Route::post('/', [BarangController::class, 'store']);
-    Route::get('/{id}', [BarangController::class, 'show']);
-    Route::get('/{id}/edit', [BarangController::class, 'edit']);
-    Route::put('/{id}', [BarangController::class, 'update']);
-    Route::get('/{id}/delete', [BarangController::class, 'confirm']);
-    Route::delete('/{id}', [BarangController:: class, 'delete']);
-});
+    Route::group(['prefix' => 'kategori'], function () {
+        Route::get('/', [KetegoriController::class, 'index']);
+        Route::post('/list', [KetegoriController::class, 'list']);
+        Route::get('/create', [KetegoriController::class, 'create']);
+        Route::post('/', [KetegoriController::class, 'store']);
+        Route::get('/{id}', [KetegoriController::class, 'show']);
+        Route::get('/{id}/edit', [KetegoriController::class, 'edit']);
+        Route::put('/{id}', [KetegoriController::class, 'update']);
+        Route::get('/{id}/delete', [KetegoriController::class, 'confirm']);
+        Route::delete('/{id}', [KetegoriController:: class, 'delete']);
+    });
 
-Route::group(['prefix' => 'supplier'], function () {
-    Route::get('/', [SupplierController::class, 'index']);
-    Route::post('/list', [SupplierController::class, 'list']);
-    Route::get('/create', [SupplierController::class, 'create']);
-    Route::post('/', [SupplierController::class, 'store']);
-    Route::get('/{id}', [SupplierController::class, 'show']);
-    Route::get('/{id}/edit', [SupplierController::class, 'edit']);
-    Route::put('/{id}', [SupplierController::class, 'update']);
-    Route::get('/{id}/delete', [SupplierController::class, 'confirm']);
-    Route::delete('/{id}', [SupplierController:: class, 'delete']);
-});
+    Route::group(['prefix' => 'barang'], function () {
+        Route::get('/', [BarangController::class, 'index']);
+        Route::post('/list', [BarangController::class, 'list']);
+        Route::get('/create', [BarangController::class, 'create']);
+        Route::post('/', [BarangController::class, 'store']);
+        Route::get('/{id}', [BarangController::class, 'show']);
+        Route::get('/{id}/edit', [BarangController::class, 'edit']);
+        Route::put('/{id}', [BarangController::class, 'update']);
+        Route::get('/{id}/delete', [BarangController::class, 'confirm']);
+        Route::delete('/{id}', [BarangController:: class, 'delete']);
+    });
 
-Route::group(['prefix' => 'stok'], function () {
-    Route::get('/', [StokController::class, 'index']);
-    Route::post('/list', [StokController::class, 'list']);
-    Route::get('/create', [StokController::class, 'create']);
-    Route::post('/', [StokController::class, 'store']);
-    Route::get('/{id}', [StokController::class, 'show']);
-    Route::get('/{id}/edit', [StokController::class, 'edit']);
-    Route::put('/{id}', [StokController::class, 'update']);
-    Route::get('/{id}/delete', [StokController::class, 'confirm']);
-    Route::delete('/{id}', [StokController:: class, 'delete']);
-});
+    Route::group(['prefix' => 'supplier'], function () {
+        Route::get('/', [SupplierController::class, 'index']);
+        Route::post('/list', [SupplierController::class, 'list']);
+        Route::get('/create', [SupplierController::class, 'create']);
+        Route::post('/', [SupplierController::class, 'store']);
+        Route::get('/{id}', [SupplierController::class, 'show']);
+        Route::get('/{id}/edit', [SupplierController::class, 'edit']);
+        Route::put('/{id}', [SupplierController::class, 'update']);
+        Route::get('/{id}/delete', [SupplierController::class, 'confirm']);
+        Route::delete('/{id}', [SupplierController:: class, 'delete']);
+    });
 
-Route::group(['prefix' => 'penjualan'], function () {
-    Route::get('/', [PenjualanController::class, 'index']);
-    Route::post('/list', [PenjualanController::class, 'list']);
-    Route::get('/create', [PenjualanController::class, 'create']);
-    Route::post('/', [PenjualanController::class, 'store']);
-    Route::get('/{id}', [PenjualanController::class, 'show']);
-    Route::get('/{id}/edit', [PenjualanController::class, 'edit']);
-    Route::put('/{id}', [PenjualanController::class, 'update']);
-    Route::get('/{id}/delete', [PenjualanController::class, 'confirm']);
-    Route::delete('/{id}', [PenjualanController:: class, 'delete']);
+    Route::group(['prefix' => 'stok'], function () {
+        Route::get('/', [StokController::class, 'index']);
+        Route::post('/list', [StokController::class, 'list']);
+        Route::get('/create', [StokController::class, 'create']);
+        Route::post('/', [StokController::class, 'store']);
+        Route::get('/{id}', [StokController::class, 'show']);
+        Route::get('/{id}/edit', [StokController::class, 'edit']);
+        Route::put('/{id}', [StokController::class, 'update']);
+        Route::get('/{id}/delete', [StokController::class, 'confirm']);
+        Route::delete('/{id}', [StokController:: class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'penjualan'], function () {
+        Route::get('/', [PenjualanController::class, 'index']);
+        Route::post('/list', [PenjualanController::class, 'list']);
+        Route::get('/create', [PenjualanController::class, 'create']);
+        Route::post('/', [PenjualanController::class, 'store']);
+        Route::get('/{id}', [PenjualanController::class, 'show']);
+        Route::get('/{id}/edit', [PenjualanController::class, 'edit']);
+        Route::put('/{id}', [PenjualanController::class, 'update']);
+        Route::get('/{id}/delete', [PenjualanController::class, 'confirm']);
+        Route::delete('/{id}', [PenjualanController:: class, 'delete']);
+    });
 });
