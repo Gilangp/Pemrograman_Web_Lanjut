@@ -13,7 +13,10 @@
 | 3         | MIGRATION, SEEDER, DB FAÇADE, QUERY BUILDER, dan ELOQUENT ORM | Laporan: [Jobsheet 3](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%203/Jobsheet%203_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%203/PWL_POS) |
 | 4         | MODEL dan ELOQUENT ORM                                   | Laporan: [Jobsheet 4](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%204/Jobsheet%204_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%204/PWL_POS) |
 | 5         | Blade View, Web Templating (AdminLTE), Datatables        | Laporan: [Jobsheet 5](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%205/Jobsheet%205_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%205/PWL_POS) |
-
+| 5.2       | Blade View, Web Layout, dan Datatable                    | Laporan: [Jobsheet 5.2](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%205.2/Jobsheet%205.2_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%205.2/PWL_POS) |
+| 6       | Ajax Form (AdminLTE) dan Client Validation                 | Laporan: [Jobsheet 6](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%206/Jobsheet%206_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%206/PWL_POS) |
+| 7       | Authentication dan Authorization di Laravel                | Laporan: [Jobsheet 7](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%207/Jobsheet%207_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%207/PWL_POS) |
+| 8       | File Import dan Export ke PDF dan Excel pada Laravel       | Laporan: [Jobsheet 8](https://github.com/Gilangp/Pemrograman_Web_Lanjut/blob/main/Minggu%208/Jobsheet%208_Gilang%20Purnomo.pdf) <br> Kode Program : [PWL_POS](https://github.com/Gilangp/Pemrograman_Web_Lanjut/tree/main/Minggu%208/PWL_POS) |
 
 
 ---
