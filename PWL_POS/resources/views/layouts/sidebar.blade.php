@@ -68,7 +68,7 @@
         </ul>
     </nav>
     <!-- Logout -->
-    {{-- <nav class="mt-5">
+    <nav class="mt-5">
         <ul class="nav nav-pills nav-sidebar flex-column">
             <li class="nav-item">
                 <a href="/logout" class="nav-link text-danger">
@@ -77,5 +77,5 @@
                 </a>
             </li>
         </ul>
-    </nav> --}}
+    </nav>
 </div>
