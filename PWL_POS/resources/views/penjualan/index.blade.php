@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('stok/create') }}')" class="btn btn-sm btn-primary mt-1">Tambah Stok</button>
+                <button onclick="modalAction('{{ url('penjualan/create') }}')" class="btn btn-sm btn-primary mt-1">Tambah Penjualan</button>
             </div>
         </div>
         <div class="card-body">
@@ -16,37 +16,21 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Filter :</label>
-                        <div class="col-3">
-                            <select class="form-control" id="barang_id" name="barang_id">
-                                <option value="">- Semua -</option>
-                                @foreach ($barang as $item)
-                                    <option value="{{ $item->barang_id }}">{{ $item->barang_nama }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Nama Barang</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_stok">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>ID User</th>
-                        <th>ID Barang</th>
-                        <th>Nama Barang</th>
-                        <th>Tanggal Stok</th>
-                        <th>Jumlah Stok</th>
+                        <th>Pembeli</th>
+                        <th>Kode Penjualan</th>
+                        <th>Tanggal Penjualan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
+
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
@@ -61,49 +45,44 @@
             });
         }
 
-        var dataStok;
+        var dataPenjualan
         $(document).ready(function() {
-            dataStok = $('#table_stok').DataTable({
+            dataPenjualan = $('#table_penjualan').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('stok/list') }}",
+                    "url": "{{ url('penjualan/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function(d) {
-                        d.barang_id = $('#barang_id').val();
-                    }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: "DT_RowIndex",
                         className: "text-center",
                         orderable: false,
-                        searchable: false,
+                        searchable: false
                     },
                     {
-                        data: "user.user_id",
+                        data: "user_id",
+                        className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "barang.barang_id",
+                        data: "pembeli",
+                        className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "barang.barang_nama",
+                        data: "penjualan_kode",
+                        className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "stok_tanggal",
+                        data: "tanggal_penjualan",
+                        className: "",
                         orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: "stok_jumlah",
-                        orderable: true,
-                        searchable: true
+                        searchable: false
                     },
                     {
                         data: "aksi",
@@ -112,10 +91,6 @@
                         searchable: false
                     }
                 ]
-            });
-
-            $('#barang_id').on('change', function() {
-                dataStok.ajax.reload();
             });
         });
     </script>
