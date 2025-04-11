@@ -4,18 +4,44 @@
     <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
+    {{-- <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ url('/') }}" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
-    </li>
+    </li> --}}
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-    <!-- Navbar Search -->
+
+    <!-- tampilan untuk Level Login -->
     <li class="nav-item">
+        <a class="nav-link text-bold" href="#">
+            Login sebagai: {{ Auth::user()->level->level_nama }}
+        </a>
+    </li>
+
+    <!-- Profile Dropdown -->
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="{{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : asset('icon_profile.png') }}" class="img-circle elevation-2" alt="Photo User" width="30" height="30">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            {{-- tampil profil --}}
+            <a href="{{ url('profile/show') }}" class="dropdown-item">
+                <i class="fas fa-user-cog mr-2"></i> Lihat Profil
+            </a>
+
+            {{-- logout --}}
+            <a href="{{ url('logout') }}" class="dropdown-item text-danger">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+        </div>
+    </li>
+
+    <!-- Navbar Search -->
+    {{-- <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
         <i class="fas fa-search"></i>
         </a>
@@ -34,10 +60,10 @@
             </div>
         </form>
         </div>
-    </li>
+    </li> --}}
 
     <!-- Messages Dropdown Menu -->
-    <li class="nav-item dropdown">
+    {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-comments"></i>
         <span class="badge badge-danger navbar-badge">3</span>
@@ -46,7 +72,7 @@
         <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-            <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <img src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
             <div class="media-body">
                 <h3 class="dropdown-item-title">
                 Brad Diesel
@@ -62,7 +88,7 @@
         <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-            <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <img src="{{ asset('adminlte/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
             <div class="media-body">
                 <h3 class="dropdown-item-title">
                 John Pierce
@@ -78,7 +104,7 @@
         <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-            <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
             <div class="media-body">
                 <h3 class="dropdown-item-title">
                 Nora Silvester
@@ -93,9 +119,9 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-    </li>
+    </li> --}}
     <!-- Notifications Dropdown Menu -->
-    <li class="nav-item dropdown">
+    {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
         <span class="badge badge-warning navbar-badge">15</span>
@@ -120,16 +146,16 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
         <i class="fas fa-expand-arrows-alt"></i>
         </a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
         <i class="fas fa-th-large"></i>
         </a>
-    </li>
+    </li> --}}
     </ul>
 </nav>

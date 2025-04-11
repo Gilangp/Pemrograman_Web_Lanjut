@@ -27,25 +27,41 @@
                     label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning">
-                    <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
-                    Apakah Anda ingin menghapus data seperti di bawah ini?
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <i class="fas fa-exclamation-triangle fa-lg mr-2"></i>
+                    <div>
+                        <strong>Konfirmasi !!!</strong><br>
+                        Apakah Anda ingin menghapus data seperti di bawah ini?
+                    </div>
                 </div>
-                <table class="table table-sm table-bordered table-striped">
-                    <tr>
-                        <th class="text-right col-3">Level Pengguna :</th>
-                        <td class="col-9">{{ $user->level->level_nama }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right col-3">Username :</th>
-                        <td class="col-9">{{ $user->username }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right col-3">Nama :</th>
-                        <td class="col-9">{{ $user->nama }}</td>
-                    </tr>
-                </table>
+
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('icon_profile.png') }}"
+                            alt="Foto User"
+                            class="rounded-circle shadow-sm mb-2"
+                            style="width: 100px; height: 100px; object-fit: cover;">
+                    </div>
+
+                    <div class="col-md-8">
+                        <table class="table table-sm table-bordered table-striped mb-0">
+                            <tr>
+                                <th class="text-right w-50">Level Pengguna :</th>
+                                <td>{{ $user->level->level_nama }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right">Username :</th>
+                                <td>{{ $user->username }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right">Nama :</th>
+                                <td>{{ $user->nama }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                 <button type="submit" class="btn btn-primary">Ya, Hapus</button>

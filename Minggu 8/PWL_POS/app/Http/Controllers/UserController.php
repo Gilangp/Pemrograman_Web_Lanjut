@@ -6,6 +6,7 @@ use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,6 +106,7 @@ class UserController extends Controller
         // cek apakah request berupa ajax
         if($request->ajax() || $request->wantsJson()) {
             $rules = [
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'level_id' => 'required|integer',
                 'username' => 'required|string|min:3|unique:m_user,username',
                 'nama'     => 'required|string|max:100',
@@ -121,7 +123,26 @@ class UserController extends Controller
                 ]);
             }
 
-            UserModel::create($request->all());
+            $photoPath = null;
+            if ($request->hasFile('photo'))
+            {
+                $photo = $request->file('photo');
+                $originalName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $photo->getClientOriginalExtension();
+                $timestamp = date('Ymd');
+                $fileName = $originalName . '_' . $timestamp . '.' . $extension;
+
+                $photoPath = $photo->storeAs('uploads/foto_user', $fileName, 'public');
+            }
+
+            UserModel::create([
+                'username' => $request->username,
+                'nama' => $request->nama,
+                'password' => bcrypt($request->password),
+                'level_id' => $request->level_id,
+                'photo' => $photoPath
+            ]);
+
             return response()->json([
                 'status'  => true,
                 'message' => 'Data user berhasil disimpan'
@@ -203,10 +224,11 @@ class UserController extends Controller
         return redirect('/user')->with('success', 'Data User berhasil diubah');
     }
 
-    public function update_ajax(Request $request, $id){
-        // cek apakah request dari ajax
+    public function update_ajax(Request $request, $id)
+    {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'level_id' => 'required|integer',
                 'username' => 'required|max:20|unique:m_user,username,'.$id.',user_id',
                 'nama' => 'required|max:100',
@@ -222,18 +244,39 @@ class UserController extends Controller
                     'msgField' => $validator->errors()
                 ]);
             }
-            $check = UserModel::find($id);
-            if ($check) {
-                if(!$request->filled('password') ){
-                $request->request->remove('password');
-            }
 
-            $check->update($request->all());
-            return response()->json([
-                'status' => true,
-                'message' => 'Data berhasil diupdate'
-            ]);
-            } else{
+            $user = UserModel::find($id);
+
+            if ($user) {
+                $data = [
+                    'username' => $request->username,
+                    'nama' => $request->nama,
+                    'level_id' => $request->level_id
+                ];
+
+                if ($request->filled('password')) {
+                    $data['password'] = bcrypt($request->password);
+                }
+
+                if ($request->hasFile('photo')) {
+                    if (!empty($user->photo) && Storage::disk('public')->exists($user->photo)) {
+                        Storage::disk('public')->delete($user->photo);
+                    }
+
+                    $photo = $request->file('photo');
+                    $fileName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME) . '_' . date('Ymd') . '.' . $photo->getClientOriginalExtension();
+                    $photoPath = $photo->storeAs('uploads/foto_user', $fileName, 'public');
+
+                    $data['photo'] = $photoPath;
+                }
+
+                $user->update($data);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'Data tidak ditemukan'
@@ -267,11 +310,18 @@ class UserController extends Controller
         return view('user.confirm_ajax', ['user' => $user]);
     }
 
-    public function delete_ajax(request $request, $id) {
-        if($request->ajax() || $request->wantsJson()){
+        public function delete_ajax(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
             $user = UserModel::find($id);
+
             if ($user) {
+                if (!empty($user->photo) && Storage::disk('public')->exists($user->photo)) {
+                    Storage::disk('public')->delete($user->photo);
+                }
+
                 $user->delete();
+
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil dihapus'
