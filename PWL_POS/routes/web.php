@@ -35,16 +35,19 @@ Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
 
-    Route::group(['prefix' => 'level'], function () {
-        Route::get('/', [LevelController::class, 'index']);
-        Route::post('/list', [LevelController::class, 'list']);
-        Route::get('/create', [LevelController::class, 'create']);
-        Route::post('/', [LevelController::class, 'store']);
-        Route::get('/{id}', [LevelController::class, 'show']);
-        Route::get('/{id}/edit', [LevelController::class, 'edit']);
-        Route::put('/{id}', [LevelController::class, 'update']);
-        Route::get('/{id}/delete', [LevelController::class, 'confirm']);
-        Route::delete('/{id}', [LevelController:: class, 'delete']);
+    // Hak akses untuk role ADM
+    Route::middleware(['authorize:ADM'])->group(function(){
+        Route::group(['prefix' => 'level'], function () {
+            Route::get('/', [LevelController::class, 'index']);
+            Route::post('/list', [LevelController::class, 'list']);
+            Route::get('/create', [LevelController::class, 'create']);
+            Route::post('/', [LevelController::class, 'store']);
+            Route::get('/{id}', [LevelController::class, 'show']);
+            Route::get('/{id}/edit', [LevelController::class, 'edit']);
+            Route::put('/{id}', [LevelController::class, 'update']);
+            Route::get('/{id}/delete', [LevelController::class, 'confirm']);
+            Route::delete('/{id}', [LevelController:: class, 'delete']);
+        });
     });
 
     Route::group(['prefix' => 'user'], function () {
