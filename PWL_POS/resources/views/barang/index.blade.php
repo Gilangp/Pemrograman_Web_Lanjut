@@ -1,40 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Barang</title>
-</head>
-<body>
-    <h1>Data Barang</h1>
-    <a href="/barang/tambah">+ Tambah Barang</a>
-    <table border="1" cellpadding="2" cellspacing="0">
-        <tr>
-            <th>ID</th>
-            <th>Kode Barang</th>
-            <th>Nama Barang</th>
-            <th>Harga Beli</th>
-            <th>Harga Jual</th>
-            <th>ID Kategori Barang</th>
-            <th>Kode Kategori</th>
-            <th>Nama Kategori</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach ($data as $d)
-        <tr>
-            <td>{{ $d->barang_id }}</td>
-            <td>{{ $d->barang_kode }}</td>
-            <td>{{ $d->barang_nama }}</td>
-            <td>{{ $d->harga_beli }}</td>
-            <td>{{ $d->harga_jual }}</td>
-            <td>{{ $d->kategori->kategori_id }}</td>
-            <td>{{ $d->kategori->kategori_kode }}</td>
-            <td>{{ $d->kategori->kategori_nama }}</td>
-            <td><a href="/barang/ubah/{{ $d->barang_id }}">Ubah</a> |
-                <a href="/barang/hapus/{{ $d->barang_id }}">Hapus</a></td>
-        </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+@extends('layouts.template')
+
+@section('content')
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h3 class="card-title">{{ $page->title }}</h3>
+            <div class="card-tools">
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('barang/create') }}">Tambah Barang</a>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Filter :</label>
+                        <div class="col-3">
+                            <select class="form-control" id="kategori_id" name="kategori_id">
+                                <option value="">- Semua -</option>
+                                @foreach ($kategori as $item)
+                                    <option value="{{ $item->kategori_id }}">{{ $item->kategori_nama }}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Kategori Barang</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_barang">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kode Barang</th>
+                        <th>Kategori Barang</th>
+                        <th>Nama Barang</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+@endsection
+
+@push('css')
+@endpush
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            var dataBarang = $('#table_barang').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: "{{ url('barang/list') }}",
+                    type: "POST",
+                    data: function(d) {
+                        d.kategori_id = $('#kategori_id').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: "DT_RowIndex",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        data: "barang_kode",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "kategori.kategori_nama",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "barang_nama",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "harga_beli",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "harga_jual",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "aksi",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+            $('#kategori_id').on('change', function() {
+                dataBarang.ajax.reload();
+            });
+        });
+    </script>
+@endpush
