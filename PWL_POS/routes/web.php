@@ -77,6 +77,10 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}', [BarangController::class, 'update']);
             Route::get('/{id}/delete', [BarangController::class, 'confirm']);
             Route::delete('/{id}', [BarangController:: class, 'delete']);
+            Route::get('/import', [BarangController::class, 'import']);
+            Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
+            Route::get('/export_excel', [BarangController::class, 'export_excel']);
+            Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
         });
     });
 
