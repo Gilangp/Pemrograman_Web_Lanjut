@@ -22,9 +22,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 {{-- tampil profil --}}
-                <a href="{{ url('profile/show') }}" class="dropdown-item">
+                <button onclick="modalAction('{{ url('profile') }}')" class="dropdown-item">
                     <i class="fas fa-user-cog mr-2"></i> Lihat Profil
-                </a>
+                </button>
 
                 {{-- logout --}}
                 <a href="{{ url('logout') }}" class="dropdown-item text-danger">

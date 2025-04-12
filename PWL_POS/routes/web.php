@@ -6,6 +6,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\KetegoriController;
 use App\Http\Controllers\SupplierController;
@@ -37,6 +38,12 @@ Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
+
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', [ProfileController::class, 'index']);
+        Route::get('/edit', [ProfileController::class, 'edit']);
+        Route::put('/', [ProfileController::class, 'update']);
+    });
 
     // Hak akses untuk role ADM
     Route::middleware(['authorize:ADM'])->group(function(){

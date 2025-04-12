@@ -45,7 +45,7 @@
 
         var dataKategori;
         $(document).ready(function() {
-            var dataKategori = $('#table_kategori').DataTable({
+            dataKategori = $('#table_kategori').DataTable({
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('kategori/list') }}",
@@ -81,7 +81,7 @@
                 ]
             });
             $('#kategori_kode').on('change', function() {
-                dataLevel.ajax.reload();
+                dataKategori.ajax.reload();
             });
         });
     </script>

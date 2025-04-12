@@ -33,11 +33,6 @@ class KetegoriController extends Controller
     {
         $kategoris = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
 
-        // Filter berdasarkan kode kategori
-        if (!empty($request->kategori_kode)) {
-            $kategoris->where('kategori_kode', $request->kategori_kode);
-        }
-
         return DataTables::of($kategoris)
             ->addIndexColumn()
             ->addColumn('aksi', function ($kategori) {

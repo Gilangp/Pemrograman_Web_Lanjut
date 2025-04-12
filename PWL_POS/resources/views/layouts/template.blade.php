@@ -57,6 +57,8 @@
 
     @include('layouts.footer')
     <!-- /.control-sidebar -->
+
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true"></div>
 </div>
 <!-- ./wrapper -->
 <!-- jQuery -->
@@ -91,6 +93,12 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function modalAction(url = '') {
+        $('#myModal').load(url, function () {
+            $('#myModal').modal('show');
+        });
+    }
 </script>
 @stack('js')
 </body>
