@@ -43,6 +43,10 @@
                             <td class="col-9">{{ $penjualan->user->user_id }}</td>
                         </tr>
                         <tr>
+                            <th class="text-right col-3">Nama User:</th>
+                            <td class="col-9">{{ $penjualan->user->nama }}</td>
+                        </tr>
+                        <tr>
                             <th class="text-right col-3">Nama Pembeli:</th>
                             <td class="col-9">{{ $penjualan->pembeli }}</td>
                         </tr>
