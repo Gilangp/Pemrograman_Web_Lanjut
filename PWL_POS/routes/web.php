@@ -62,6 +62,18 @@ Route::middleware(['auth'])->group(function () {
 
     // Hak akses hanya admin dan manager
     Route::middleware(['authorize:ADM,MNG'])->group(function(){
+        Route::group(['prefix' => 'kategori'], function () {
+            Route::get('/', [KetegoriController::class, 'index']);
+            Route::post('/list', [KetegoriController::class, 'list']);
+            Route::get('/create', [KetegoriController::class, 'create']);
+            Route::post('/', [KetegoriController::class, 'store']);
+            Route::get('/{id}', [KetegoriController::class, 'show']);
+            Route::get('/{id}/edit', [KetegoriController::class, 'edit']);
+            Route::put('/{id}', [KetegoriController::class, 'update']);
+            Route::get('/{id}/delete', [KetegoriController::class, 'confirm']);
+            Route::delete('/{id}', [KetegoriController:: class, 'delete']);
+        });
+
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', [UserController::class, 'index']);
             Route::post('/list', [UserController::class, 'list']);
@@ -93,21 +105,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Hak akses hanya admin, manager, dan staff
     Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
-        Route::group(['prefix' => 'stok'], function () {
-            Route::get('/', [StokController::class, 'index']);
-            Route::post('/list', [StokController::class, 'list']);
-            Route::get('/create', [StokController::class, 'create']);
-            Route::post('/', [StokController::class, 'store']);
-            Route::get('/{id}', [StokController::class, 'show']);
-            Route::get('/{id}/edit', [StokController::class, 'edit']);
-            Route::put('/{id}', [StokController::class, 'update']);
-            Route::get('/{id}/delete', [StokController::class, 'confirm']);
-            Route::delete('/{id}', [StokController:: class, 'delete']);
-        });
-    });
-
-    // Hak akses hanya admin, manager, staff, dan customer
-    Route::middleware(['authorize:ADM,MNG,STF,CUS'])->group(function(){
         Route::group(['prefix' => 'penjualan'], function () {
             Route::get('/', [PenjualanController::class, 'index']);
             Route::post('/list', [PenjualanController::class, 'list']);
@@ -121,8 +118,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    // Hak akses hanya admin, manager, staff, dan supplier
-    Route::middleware(['authorize:ADM,MNG,STF,SUP'])->group(function(){
+    // Hak akses hanya admin, manager, dan supplier
+    Route::middleware(['authorize:ADM,MNG,SUP'])->group(function(){
         Route::group(['prefix' => 'supplier'], function () {
             Route::get('/', [SupplierController::class, 'index']);
             Route::post('/list', [SupplierController::class, 'list']);
@@ -134,20 +131,27 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete', [SupplierController::class, 'confirm']);
             Route::delete('/{id}', [SupplierController:: class, 'delete']);
         });
+
+        Route::group(['prefix' => 'stok'], function () {
+            Route::get('/', [StokController::class, 'index']);
+            Route::post('/list', [StokController::class, 'list']);
+            Route::get('/create', [StokController::class, 'create']);
+            Route::post('/', [StokController::class, 'store']);
+            Route::get('/{id}', [StokController::class, 'show']);
+            Route::get('/{id}/edit', [StokController::class, 'edit']);
+            Route::put('/{id}', [StokController::class, 'update']);
+            Route::get('/{id}/delete', [StokController::class, 'confirm']);
+            Route::delete('/{id}', [StokController:: class, 'delete']);
+        });
     });
 
     // Hak akses untuk semua level
     Route::middleware(['authorize:ADM,MNG,STF,CUS,SUP'])->group(function(){
-        Route::group(['prefix' => 'kategori'], function () {
-            Route::get('/', [KetegoriController::class, 'index']);
-            Route::post('/list', [KetegoriController::class, 'list']);
-            Route::get('/create', [KetegoriController::class, 'create']);
-            Route::post('/', [KetegoriController::class, 'store']);
-            Route::get('/{id}', [KetegoriController::class, 'show']);
-            Route::get('/{id}/edit', [KetegoriController::class, 'edit']);
-            Route::put('/{id}', [KetegoriController::class, 'update']);
-            Route::get('/{id}/delete', [KetegoriController::class, 'confirm']);
-            Route::delete('/{id}', [KetegoriController:: class, 'delete']);
-        });
+
+    });
+
+    // Hak akses hanya admin, manager, staff, dan customer
+    Route::middleware(['authorize:ADM,MNG,STF,CUS'])->group(function(){
+
     });
 });

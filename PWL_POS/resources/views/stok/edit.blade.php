@@ -31,34 +31,31 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama User</label>
-                        <select id="user_id" name="user_id" class="form-control" required>
-                            <option value="">- Pilih User -</option>
+                        <select class="form-control" disabled>
                             @foreach($user as $item)
-                                <option value="{{ $item->user_id }}" {{ $item->user_id == $stok->user_id ? 'selected' : '' }}>
-                                    {{ $item->nama }}
-                                </option>
+                                @if($item->user_id == $stok->user_id)
+                                    <option selected>{{ $item->nama }}</option>
+                                @endif
                             @endforeach
                         </select>
-                        <small id="error-user-id" class="error-text form-text text-danger"></small>
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->user_id }}">
                     </div>
 
                     <div class="form-group">
                         <label>Nama Barang</label>
-                        <select name="barang_id" id="barang_id" class="form-control" required>
-                            <option value="">- Pilih Barang -</option>
-                            @foreach ($barang as $item)
-                                <option value="{{ $item->barang_id }}" {{ $item->barang_id == $stok->barang_id ? 'selected' : '' }}>
-                                    {{ $item->barang_nama }}
-                                </option>
+                        <select class="form-control" disabled>
+                            @foreach($barang as $item)
+                                @if($item->barang_id == $stok->barang_id)
+                                    <option selected>{{ $item->barang_nama }}</option>
+                                @endif
                             @endforeach
                         </select>
-                        <small id="error-barang-id" class="error-text form-text text-danger"></small>
+                        <input type="hidden" name="barang_id" value="{{ $stok->barang_id }}">
                     </div>
 
                     <div class="form-group">
                         <label>Tanggal Stok</label>
-                        <input type="date" name="stok_tanggal" id="stok_tanggal" class="form-control"
-                            value="{{ $stok->stok_tanggal }}" required>
+                        <input type="date" name="stok_tanggal" id="stok_tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
                         <small id="error-stok-tanggal" class="error-text form-text text-danger"></small>
                     </div>
 

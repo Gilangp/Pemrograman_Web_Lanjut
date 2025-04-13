@@ -6,6 +6,7 @@ use App\Models\StokModel;
 use App\Models\UserModel;
 use App\Models\BarangModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,8 +54,8 @@ class StokController extends Controller
     // Menampilkan modal tambah stok
     public function create()
     {
-        $barang = BarangModel::all();
-        $user = UserModel::all();
+        $barang = BarangModel::doesntHave('stok')->get();
+        $user = Auth::user();
 
         return view('stok.create')->with(['barang' => $barang, 'user' => $user]);
     }

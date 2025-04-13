@@ -35,8 +35,8 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_stok">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>ID User</th>
+                        <th>No</th>
+                        <th>Nama User</th>
                         <th>ID Barang</th>
                         <th>Nama Barang</th>
                         <th>Tanggal Stok</th>
@@ -81,7 +81,7 @@
                         searchable: false,
                     },
                     {
-                        data: "user.user_id",
+                        data: "user.nama",
                         orderable: true,
                         searchable: true
                     },
