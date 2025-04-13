@@ -103,8 +103,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    // Hak akses hanya admin, manager, dan staff
-    Route::middleware(['authorize:ADM,MNG,STF'])->group(function(){
+    // Hak akses hanya admin dan staff
+    Route::middleware(['authorize:ADM,STF'])->group(function(){
         Route::group(['prefix' => 'penjualan'], function () {
             Route::get('/', [PenjualanController::class, 'index']);
             Route::post('/list', [PenjualanController::class, 'list']);
@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}', [PenjualanController::class, 'update']);
             Route::get('/{id}/delete', [PenjualanController::class, 'confirm']);
             Route::delete('/{id}', [PenjualanController:: class, 'delete']);
+            Route::get('/export_pdf/{id}', [PenjualanController::class, 'export_pdf']);
         });
     });
 
@@ -142,6 +143,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}', [StokController::class, 'update']);
             Route::get('/{id}/delete', [StokController::class, 'confirm']);
             Route::delete('/{id}', [StokController:: class, 'delete']);
+            Route::get('/export_pdf', [StokController::class, 'export_pdf']);
         });
     });
 

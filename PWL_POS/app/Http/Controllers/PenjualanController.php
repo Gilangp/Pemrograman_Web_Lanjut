@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PenjualanController extends Controller
 {
@@ -238,5 +239,17 @@ class PenjualanController extends Controller
         }
 
         return redirect('/');
+    }
+
+    // export pdf
+    public function export_pdf($id)
+    {
+        $penjualan = PenjualanModel::with(['user', 'penjualanDetail.barang'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('penjualan.export_pdf', ['penjualan' => $penjualan]);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption("isRemoteEnabled", true);
+
+        return $pdf->stream('Penjualan-' . $penjualan->penjualan_kode . '-' . date('Ymd_His') . '.pdf');
     }
 }

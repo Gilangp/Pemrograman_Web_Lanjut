@@ -68,5 +68,10 @@
                 </tbody>
             </table>
         </div>
+        <div class="modal-footer justify-content-end">
+            <a href="{{ url('penjualan/export_pdf', $penjualan->penjualan_id) }}" target="_blank" class="btn btn-danger">
+                <i class="fas fa-file-pdf"></i> Print Struk
+            </a>
+        </div>
     </div>
 </div>

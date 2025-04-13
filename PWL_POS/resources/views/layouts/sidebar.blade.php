@@ -130,7 +130,7 @@
         @endif
 
         {{-- ADM, MNG, STF --}}
-        @if(in_array(Auth::user()->level->level_kode, ['ADM', 'MNG', 'STF']))
+        @if(in_array(Auth::user()->level->level_kode, ['ADM', 'STF']))
             <li class="nav-item">
                 <a href="{{ url('/penjualan') }}" class="nav-link {{ ($activeMenu == 'penjualan') ? 'active' : '' }} ">
                     <i class="nav-icon fas fa-cash-register"></i>

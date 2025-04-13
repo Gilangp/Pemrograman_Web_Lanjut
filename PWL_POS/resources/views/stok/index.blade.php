@@ -5,6 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
+                <a href="{{ url('stok/export_pdf') }}" class="btn btn-danger btn-sm mt-1"><i class="fa fa-file-pdf"></i> Export Stok</a>
                 <button onclick="modalAction('{{ url('stok/create') }}')" class="btn btn-sm btn-primary mt-1">Tambah Stok</button>
             </div>
         </div>
