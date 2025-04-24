@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LevelController extends Controller
 {
@@ -30,9 +31,14 @@ class LevelController extends Controller
         return LevelModel::find($level);
     }
 
-    public function destroy(LevelModel $user)
+    public function destroy(LevelModel $level)
     {
-        $user->delete();
+        $users = UserModel::where('level_id', $level->id)->get();
+        foreach ($users as $user) {
+            $user->delete();
+        }
+
+        $level->delete();
         return response()->json([
             'success' => true,
             'message' => 'Data Terhapus',
